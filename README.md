@@ -1,12 +1,16 @@
 # MailerLite Subscriber Client
 
-A simple Vue 3 application that interacts with the MailerLite Subscriber API.
+A simple Vue 3 client that interacts with the MailerLite Subscriber API. I aimed to keep the code as simple as possible.
 
-This project is part of a challenge and showcases frontend skills including Vue.js components, state management, and API interactions.
+This project is part of a challenge and showcases frontend skills such as Vue.js components, state management, and API interactions. Of course, there’s room for improvement, such as adding better validation, notifications, and enhanced error handling :)
+
+Hopefully, this serves as a good showcase of my skills! 🚀
 
 The backend API for this project is built with Laravel. Check it out [here](https://github.com/andreipredafl/mailerlite-subscriber-api).
 
-Credits: The UI for this project is built with [Naive UI](https://www.naiveui.com/).
+Inspired by [MailerLite interface](https://dashboard.mailerlite.com/subscribers)
+
+Credits: The UI for this project is built with [Naive UI](https://www.naiveui.com/)
 
 ## Requirements
 
