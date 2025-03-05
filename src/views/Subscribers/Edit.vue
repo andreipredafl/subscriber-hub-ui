@@ -269,9 +269,6 @@ function handleFieldValueChange(fieldId, value, fieldType) {
                     />
                 </n-form-item>
             </template>
-            <template v-else>
-                <n-text type="info">Nu există câmpuri personalizate disponibile.</n-text>
-            </template>
 
             <n-flex justify="end" :wrap="false" style="gap: 12px; margin-top: 24px">
                 <n-button type="primary" @click="handleSubmit" :loading="loading">Update</n-button>

@@ -59,21 +59,32 @@ function handlePageChange(page) {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(row, index) in displayedData" :key="index">
-                    <td v-for="column in columns" :key="column.key">
-                        <slot
-                            :name="`cell-${column.key}`"
-                            :row="row"
-                            :index="index"
-                            :value="row[column.key]"
-                        >
-                            {{ row[column.key] }}
-                        </slot>
-                    </td>
-                    <td v-if="$slots.actions">
-                        <slot name="actions" :row="row" :index="index" />
-                    </td>
-                </tr>
+                <template v-if="displayedData.length > 0">
+                    <tr v-for="(row, index) in displayedData" :key="index">
+                        <td v-for="column in columns" :key="column.key">
+                            <slot
+                                :name="`cell-${column.key}`"
+                                :row="row"
+                                :index="index"
+                                :value="row[column.key]"
+                            >
+                                {{ row[column.key] }}
+                            </slot>
+                        </td>
+                        <td v-if="$slots.actions">
+                            <slot name="actions" :row="row" :index="index" />
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td :colspan="columns.length">
+                            <slot name="empty-state">
+                                <n-text type="info">No data available.</n-text>
+                            </slot>
+                        </td>
+                    </tr>
+                </template>
             </tbody>
         </n-table>
 
