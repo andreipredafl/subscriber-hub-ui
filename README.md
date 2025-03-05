@@ -6,6 +6,8 @@ This project is part of a challenge and showcases frontend skills including Vue.
 
 The backend API for this project is built with Laravel. Check it out [here](https://github.com/andreipredafl/mailerlite-subscriber-api).
 
+Credits: The UI for this project is built with [Naive UI](https://www.naiveui.com/).
+
 ## Requirements
 
 -   Node.js 16+
