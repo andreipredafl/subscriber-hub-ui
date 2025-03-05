@@ -12,6 +12,9 @@ Inspired by [MailerLite interface](https://dashboard.mailerlite.com/subscribers)
 
 Credits: The UI for this project is built with [Naive UI](https://www.naiveui.com/)
 
+If something is not working as expected, please check [this video recording](https://vimeo.com/1062946855/e48c0f0b6a?share=copy)
+If vieo expired, please write a email to andrei.preda.dev@gmail.com
+
 ## Requirements
 
 -   Node.js 16+
