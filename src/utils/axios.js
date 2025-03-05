@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from 'axios'
+import axios from 'axios'
 
 const apiClient = axios.create({
     baseURL: process.env.VUE_APP_API_URL || 'http://localhost:8000/api',
@@ -9,8 +9,8 @@ const apiClient = axios.create({
 })
 
 apiClient.interceptors.response.use(
-    (response: AxiosResponse) => response,
-    (error: AxiosError) => {
+    (response) => response,
+    (error) => {
         if (error.response && error.response.status === 422) {
             console.error('Validation error:', error.response.data)
             return Promise.reject(error.response.data)

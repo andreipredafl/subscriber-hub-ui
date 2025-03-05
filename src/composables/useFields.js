@@ -1,9 +1,11 @@
 import { ref } from 'vue'
 import apiClient from '@/utils/axios'
-import { Field, PaginatedResponse } from '@/utils/interfaces'
 
 export default function useFields() {
-    const fields = ref<PaginatedResponse>({
+    const loading = ref(false)
+    const error = ref(null)
+
+    const fields = ref({
         data: [],
         current_page: 1,
         per_page: 10,
@@ -11,21 +13,20 @@ export default function useFields() {
         last_page: 1,
     })
 
-    const loading = ref(false)
-    const error = ref<string | null>(null)
-
-    const getFields = async (page = 1) => {
+    const getFields = async (page = null) => {
         loading.value = true
         error.value = null
 
         try {
-            const response = await apiClient.get<PaginatedResponse>('/fields', {
-                params: { page },
+            const response = await apiClient.get('/fields', {
+                ...(page ? { params: { page, per_page: 10 } } : {}),
             })
 
             fields.value = response.data
+
+            console.log(response.data)
             return response.data
-        } catch (err: any) {
+        } catch (err) {
             error.value = err.message || 'Failed to fetch fields'
             console.error(error.value)
         } finally {
@@ -33,19 +34,19 @@ export default function useFields() {
         }
     }
 
-    const createField = async (fieldData: Omit<Field, 'id'>) => {
+    const createField = async (fieldData) => {
         loading.value = true
         error.value = null
 
         try {
-            const response = await apiClient.post<Field>('/fields', fieldData)
+            const response = await apiClient.post('/fields', fieldData)
 
             const newField = response.data
             fields.value.data.unshift(newField)
             fields.value.total++
 
             return newField
-        } catch (err: any) {
+        } catch (err) {
             error.value = err.message || 'Failed to create field'
             console.error(error.value)
             throw err
@@ -54,12 +55,12 @@ export default function useFields() {
         }
     }
 
-    const updateField = async (id: number, fieldData: Partial<Field>) => {
+    const updateField = async (id, fieldData) => {
         loading.value = true
         error.value = null
 
         try {
-            const response = await apiClient.put<Field>(`/fields/${id}`, fieldData)
+            const response = await apiClient.put(`/fields/${id}`, fieldData)
 
             const updatedField = response.data
             const index = fields.value.data.findIndex((field) => field.id === id)
@@ -69,7 +70,7 @@ export default function useFields() {
             }
 
             return updatedField
-        } catch (err: any) {
+        } catch (err) {
             error.value = err.message || 'Failed to update field'
             console.error(error.value)
             throw err
@@ -78,7 +79,7 @@ export default function useFields() {
         }
     }
 
-    const deleteField = async (id: number) => {
+    const deleteField = async (id) => {
         loading.value = true
         error.value = null
 
@@ -93,7 +94,7 @@ export default function useFields() {
             }
 
             return true
-        } catch (err: any) {
+        } catch (err) {
             error.value = err.message || 'Failed to delete field'
             console.error(error.value)
             throw err

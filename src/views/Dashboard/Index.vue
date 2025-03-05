@@ -1,3 +1,13 @@
+<script>
+export default {
+    name: 'DashboardIndex',
+}
+</script>
+
+<script setup>
+import { NText, NH3, NH2 } from 'naive-ui'
+</script>
+
 <template>
     <n-h2 align-text>
         <n-text type="white">Hello!</n-text>
@@ -10,6 +20,3 @@
         </n-text>
     </n-h3>
 </template>
-<script setup lang="ts">
-import { NText, NH3, NH2 } from 'naive-ui'
-</script>

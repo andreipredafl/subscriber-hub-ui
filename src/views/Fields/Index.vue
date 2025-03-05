@@ -1,9 +1,15 @@
-<script setup lang="ts">
+<script>
+export default {
+    name: 'FieldsIndex',
+}
+</script>
+
+<script setup>
 import { NButton, NFlex, NInput, NSelect, NCard, NH1, NText, NSpin } from 'naive-ui'
 import { ref, reactive, onMounted } from 'vue'
-import TableComponent from '../components/TableComponent.vue'
-import ModalComponent from '../components/ModalComponent.vue'
-import useFields from '../composables/useFields'
+import TableComponent from '@/components/Ui/Table.vue'
+import ModalComponent from '@/components/Ui/Modal.vue'
+import useFields from '@/composables/useFields'
 
 const { fields, loading, error, getFields, createField, updateField, deleteField } = useFields()
 
@@ -124,7 +130,10 @@ function handleEditSubmit() {
         >
             <div style="margin-bottom: 16px">
                 <n-text>Title</n-text>
-                <n-input v-model:value="newField.title" />
+                <n-input
+                    v-model:value="newField.title"
+                    placeholder="Enter title (e.g. Job Title)"
+                />
             </div>
             <div>
                 <n-text>Type</n-text>
@@ -136,7 +145,10 @@ function handleEditSubmit() {
         <modal-component v-model:show="showEditModal" title="Edit Field" @submit="handleEditSubmit">
             <div style="margin-bottom: 16px">
                 <n-text>Title</n-text>
-                <n-input v-model:value="editField.title" />
+                <n-input
+                    v-model:value="editField.title"
+                    placeholder="Enter title (e.g. Job Title)"
+                />
             </div>
             <div>
                 <n-text>Type</n-text>

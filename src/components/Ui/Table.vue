@@ -1,4 +1,10 @@
-<script setup lang="ts">
+<script>
+export default {
+    name: 'UiTable',
+}
+</script>
+
+<script setup>
 import { NTable, NPagination, NFlex } from 'naive-ui'
 import { ref, computed, defineProps, defineEmits } from 'vue'
 

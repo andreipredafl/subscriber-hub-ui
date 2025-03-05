@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { NLayout, NConfigProvider, darkTheme } from 'naive-ui'
 import SidebarMenu from './components/SidebarMenu.vue'
 </script>
@@ -25,3 +25,4 @@ body {
     padding: 20px 30px;
 }
 </style>
+z

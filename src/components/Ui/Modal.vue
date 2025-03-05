@@ -1,5 +1,11 @@
-<script setup lang="ts">
-import { NModal, NCard, NButton, NSpace } from 'naive-ui'
+<script>
+export default {
+    name: 'UiModal',
+}
+</script>
+
+<script setup>
+import { NModal, NCard, NButton, NSpace, NDivider } from 'naive-ui'
 import { computed, defineEmits, defineProps } from 'vue'
 
 const props = defineProps({
@@ -37,6 +43,8 @@ function handleSubmit() {
                 <slot></slot>
             </div>
 
+            <n-divider />
+
             <template #footer>
                 <n-space justify="end">
                     <n-button @click="handleClose">Cancel</n-button>
@@ -53,6 +61,6 @@ function handleSubmit() {
 }
 
 .modal-body {
-    min-height: 200px;
+    min-height: 100px;
 }
 </style>

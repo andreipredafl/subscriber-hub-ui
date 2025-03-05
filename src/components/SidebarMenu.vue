@@ -1,39 +1,51 @@
-<script setup lang="ts">
-import { NLayoutSider, NMenu, NIcon } from 'naive-ui'
-import { h, ref } from 'vue'
-import { HomeOutline, MailOutline, BuildOutline } from '@vicons/ionicons5'
-import { useRouter } from 'vue-router'
+<script setup>
+import { NLayoutSider, NMenu, NIcon, NDivider } from 'naive-ui'
+import { h, ref, onMounted, watch, computed } from 'vue'
+import { SettingsOutline } from '@vicons/ionicons5'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
-const activeKey = ref('subscribers')
+const route = useRoute()
+const activePage = ref(null)
 const collapsed = ref(false)
 
 function renderIcon(icon) {
-    return () => h(NIcon, null, { default: () => h(icon) })
+    return () => h(NIcon, null, { default: () => h(icon || SettingsOutline) })
 }
 
-const menuOptions = [
-    {
-        label: 'Dashboard',
-        key: 'dashboard',
-        icon: renderIcon(HomeOutline),
-    },
-    {
-        label: 'Fields',
-        key: 'fields',
-        icon: renderIcon(BuildOutline),
-    },
-    {
-        label: 'Subscribers',
-        key: 'subscribers',
-        icon: renderIcon(MailOutline),
-    },
-]
+const menuOptions = computed(() => {
+    return router.options.routes
+        .filter((route) => route.meta && route.meta.inSidebar === true)
+        .map((route) => ({
+            label: route.meta.label || capitalizeFirstLetter(route.name),
+            key: route.name,
+            icon: renderIcon(route.meta.icon),
+        }))
+})
 
-function handleMenuSelect(key: string) {
-    activeKey.value = key
+function capitalizeFirstLetter(string) {
+    if (!string) return ''
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function handleMenuSelect(key) {
+    activePage.value = key
     router.push({ name: key })
 }
+
+function updateActivePage() {
+    const currentRoute = route.matched[route.matched.length - 1]
+
+    if (currentRoute && currentRoute.meta && currentRoute.meta.parent) {
+        activePage.value = currentRoute.meta.parent
+    } else if (route.name) {
+        activePage.value = route.name
+    }
+}
+
+onMounted(updateActivePage)
+
+watch(() => route.name, updateActivePage)
 </script>
 
 <template>
@@ -47,15 +59,17 @@ function handleMenuSelect(key: string) {
         :show-trigger="false"
     >
         <div class="logo-container">
-            <div class="logo">Subscibers management</div>
+            <div class="logo">Subscribers management</div>
         </div>
+
+        <n-divider />
 
         <n-menu
             :collapsed="collapsed"
             :collapsed-width="64"
             :collapsed-icon-size="22"
             :options="menuOptions"
-            :value="activeKey"
+            :value="activePage"
             @update:value="handleMenuSelect"
             :indent="18"
             style="background: #1f2225"
@@ -65,12 +79,11 @@ function handleMenuSelect(key: string) {
 
 <style scoped>
 .logo-container {
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 16px 16px 0 16px;
 }
 
 .logo {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: white;
     text-align: left;
