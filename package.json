@@ -1,5 +1,5 @@
 {
-    "name": "mailerlite-subscriber-client",
+    "name": "subscriber-hub-client",
     "version": "0.1.0",
     "private": true,
     "scripts": {
